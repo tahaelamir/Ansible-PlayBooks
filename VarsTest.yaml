@@ -1,0 +1,9 @@
+---
+- hosts: all
+  vars:
+    v1: "Hakoona"
+    v2: "Matata"
+  tasks:
+  - name: testing and calling variables
+    debug:
+      msg: "laugh in the face of danger and say {{v1}},{{v2}}"

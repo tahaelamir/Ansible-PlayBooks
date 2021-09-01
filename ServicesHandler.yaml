@@ -1,0 +1,39 @@
+---
+- hosts: all
+  become: yes
+  become_method: su
+  tasks:
+  - name: install servies on Debian servers and restart DNS service
+    apt:
+      name:
+         - apache2
+         - nginx
+         - bind9
+         - mariadb-server
+      state: latest
+    when: ansible_os_family == "Debian"
+    notify: restart DNS
+  - name: install servies on Redhat serveris and restart DNS serivce
+    yum:
+      name:
+        - httpd
+        - nginx
+        - bind
+        - mariadb
+      state: latest
+    when: ansible_os_family == "RedHat"
+    notify: restart DNS
+  - name: install services on FreeBSD servers and restart DNS service
+    pkgng:
+      name:
+        - apache24
+        - nginx
+        - bind916-9.16.19
+        - mariadb105-server-10.5.11
+    when: ansible_os_family == "FreeBSD"
+    notify: restart DNS
+  handlers: 
+  - name: restart DNS
+    service:
+      name: named
+      state: restarted

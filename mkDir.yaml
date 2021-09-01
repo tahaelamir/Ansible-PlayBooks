@@ -1,0 +1,16 @@
+---
+- hosts: Group04
+  vars:
+    Name: "Taha"
+    listDir: "ls -d"
+  tasks:
+  - name: creating {{Name}} directory
+    file:
+      path: /home/ansible/{{Name}}
+      state: directory
+  - name: check is {{Name}} exist using {{listDir}} command
+    command: "{{listDir}} /home/ansible/{{Name}}"
+    register: lsOut
+  - name: check the output of {{listDir}} command
+    debug:
+      msg: "{{lsOut.stdout}}"

@@ -1,0 +1,19 @@
+---
+- hosts: redhat
+  tasks:
+  - name: installing DNS service service
+    yum: 
+      name: bind
+      state: absent
+  - name: installing Mail service 
+    yum:
+      name: postfix
+      state: absent
+  - name: installing Web service
+    yum:
+      name: httpd
+      state: absent
+  - name: installing Database service
+    yum:
+      name: mariadb-server
+      state: absent

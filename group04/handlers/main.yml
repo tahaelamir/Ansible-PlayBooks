@@ -1,0 +1,7 @@
+---
+# handlers file for group04
+- name: restart apache
+  service:
+    name: "{{packageName}}"
+    state: restarted
+    enabled: yes

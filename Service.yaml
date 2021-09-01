@@ -1,0 +1,39 @@
+---
+- hosts: redhat
+  tasks:
+  - name: installing DNS service service
+    yum: 
+      name: bind
+      state: latest
+  - name: initialiaze DNS service
+    service:
+      name: named
+      state: started
+      enabled: yes
+  - name: installing Mail service 
+    yum:
+      name: postfix
+      state: latest
+  - name: initialiaze Mail service
+    service:
+      name: postfix
+      state: started
+      enabled: yes
+  - name: installing Web service
+    yum:
+      name: httpd
+      state: latest
+  - name: initialiaze web service
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+  - name: installing Database service
+    yum:
+      name: mariadb-server
+      state: latest
+  - name: initialiaze mariadb service
+    service:
+      name: mariadb
+      state: started
+      enabled: yes

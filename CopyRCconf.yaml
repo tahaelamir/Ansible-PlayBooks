@@ -1,0 +1,12 @@
+---
+- hosts: Group04
+  tasks:
+  - name: copy file with owner and permissions
+    copy: 
+        src: /etc/rc.conf
+        dest: /home/ansible/taha-rc.conf
+        owner: ansible
+        group: ansible
+        mode: '0644'
+  become: yes
+  become_method: su

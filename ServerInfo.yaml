@@ -1,0 +1,12 @@
+---
+- hosts: all
+  become: yes
+  become_method: su
+  vars: 
+    Name: "Taha Elamir"
+    File: "file version 20210828.Beta"
+  tasks:
+  - name: show my server information
+    template:
+      src: temp.j2
+      dest: /tmp/{{Name}}.txt

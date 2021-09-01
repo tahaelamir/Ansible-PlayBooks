@@ -1,0 +1,27 @@
+---
+- hosts: Group04
+  vars:
+    Name: "taha"
+    listFiles: "ls"
+  tasks:
+  - name: the challenge game
+    debug:
+      msg: "{{item}}"
+    with_random_choice:
+    - "go through the door"
+    - "drink from goblet"
+    - "Jumb three times"
+    - "do nothing"
+    - "mimic the dog sound"
+  - name: creating files with sequence from 1 to 10
+    file:
+      path: /var/file-{{Name}}-{{item}}.txt
+      state: touch
+    with_sequence: start=1 end=10
+    become: yes
+  - name: check if the files are excists using {{listFiles}} command
+    shell: "{{listFiles}} /var | grep file-{{Name}}-*"
+    register: lsOut
+  - name: show output of {{listFiles}} command
+    debug:
+      msg: "{{lsOut.stdout}}"

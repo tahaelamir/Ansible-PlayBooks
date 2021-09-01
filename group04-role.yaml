@@ -1,0 +1,9 @@
+---
+- name: use group04 role playbook
+  hosts: all
+  become: yes
+  become_method: su
+  gather_facts: true
+  roles:
+    - role: group04
+      system_manager: taha.elamir23@hotmail.com

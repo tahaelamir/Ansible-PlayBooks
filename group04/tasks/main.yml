@@ -1,0 +1,43 @@
+- name: set variables for redhat 
+  set_fact:
+    packageName: "httpd"
+    docRoot: "/var/www/html/"
+    confFile: "/etc/httpd/conf/httpd.conf"
+  when: ansible_os_family == "RedHat"
+- name: set variables for Debian
+  set_fact:
+    packageName: "apache2"
+    docRoot: "/var/www/html/"
+    confFile: "/etc/apache2/sites-enabled/000-default.conf"
+  when: ansible_os_family == "Debian"
+- name: set variables for FreeBSD
+  set_fact:
+    packageName: "apache24"
+    docRoot: "/usr/local/www/apache24/data/"
+    confFile: "/usr/local/etc/apache24/httpd.conf"
+  when: ansible_os_family == "FreeBSD"
+- name: install apache server on RedHat
+  yum:
+    name: "{{packageName}}"
+    state: latest
+  when: ansible_os_family == "RedHat"
+- name: install apache server on Debian
+  apt:
+    name: "{{packageName}}"
+    state: latest
+  when: ansible_os_family == "Debian"
+- name: install apache server on FreeBSD 
+  pkgng:
+    name: "{{packageName}}"
+    state: latest
+  when: ansible_os_family == "FreeBSD"
+- name: Deploy index.html page
+  template:
+    src: temp.html.j2
+    dest: "{{docRoot}}{{pcName}}.html"
+- name: configure apache sever
+  lineinfile:
+    path: "{{confFile}}"
+    regexp: "#ServerName"
+    line: "ServerName {{ inventory_hostname }}:80"
+  notify: restart apache
